@@ -1,16 +1,12 @@
 {
     "name": "rafaelssucupira/logger-app",
     "description": "Log com monolog",
-    "version": "1.0.2",
     "autoload": {
         "psr-4": {
             "LoggerApp\\": "src/"
         }
     },
     "license": "MIT",
-    "require": {
-        "php": ">=8.0"
-    },
     "authors": [
         {
             "name": "rafaelssucupira",
@@ -18,6 +14,7 @@
         }
     ],
     "require": {
+        "php": ">=8.0",
         "monolog/monolog": "^3.7"
     }
 }
