@@ -1,4 +1,5 @@
 # Abstração da classe monolog para logs em php.
+Uso 👇🏻
 ```
 <?php
 
