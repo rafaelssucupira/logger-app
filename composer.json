@@ -7,6 +7,7 @@
             "LoggerApp\\": "src/"
         }
     },
+    "license": "MIT",
     "require": {
         "php": ">=8.0"
     },
