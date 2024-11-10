@@ -6,13 +6,13 @@ use Monolog\Handler\StreamHandler;
 
 class LoggerApp 
 {
-    static function logger($channel = "console", $handler) 
+    static function logger($filename, $channel = "console", $handler = "default") 
         {
             $logg = new Logger( $channel );
 
             $resultHandler = match($handler) {
-                "log-file"    => new StreamHandler( getcwd() . "/logs/log.txt", Logger::DEBUG),
-                default       => new StreamHandler( getcwd() . "/logs/log.txt", Logger::DEBUG)
+                "log-file"    => new StreamHandler( getcwd() . "/logs/$filename.txt", Logger::DEBUG),
+                default       => new StreamHandler( getcwd() . "/logs/$filename.txt", Logger::DEBUG)
             };
 
             $resultHandler->setFormatter( new LineFormatter(null, "d/m/Y H:i:s", false, true) );
