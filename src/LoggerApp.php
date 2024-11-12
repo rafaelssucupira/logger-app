@@ -3,6 +3,7 @@ namespace LoggerApp;
 use Monolog\Logger;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
+use Monolog\Handler\TelegramBotHandler;
 
 class LoggerApp 
 {
@@ -11,8 +12,12 @@ class LoggerApp
             $logg = new Logger( $channel );
 
             $resultHandler = match($handler) {
-                "log-file"    => new StreamHandler( getcwd() . "/logs/$filename.txt", Logger::DEBUG),
-                default       => new StreamHandler( getcwd() . "/logs/$filename.txt", Logger::DEBUG)
+                "handler-file"          => new StreamHandler( getcwd() . "/logs/$filename.txt", Logger::DEBUG),
+                "handler-telegram"      => new TelegramBotHandler( 
+                    "7672712227:AAGKjr2VE7llysPhU6-vts-6CMULt_B144U",
+                    "@logs_notifications"    
+                , Logger::WARNING),
+                default             => new StreamHandler( getcwd() . "/logs/$filename.txt", Logger::DEBUG)
             };
 
             $resultHandler->setFormatter( new LineFormatter(null, "d/m/Y H:i:s", false, true) );
