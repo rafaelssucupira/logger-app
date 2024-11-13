@@ -6,9 +6,13 @@ Uso 👇🏻
 require_once ('./vendor/autoload.php');
 
 use LoggerApp\LoggerApp;
-//LoggerApp ( PATH, CHANNEL, HANDLER )
-$log            = LoggerApp::logger('log-file',     'log', 'handler_file')->info("This is a test message");
-$logTelegram    = LoggerApp::logger('log-telegram', 'rentalapp', 'handler-telegram')->warning("This is a test message");
+
+//LoggerApp ( FILENAME, CHANNEL, HANDLER )
+
+$log = new LoggerApp( "log", "SQL.sqlCommand", "handler-file" );
+$log->push( "info", "Teste!" );
+$log = new LoggerApp( "log", "SQL.sqlCommand", "handler-telegram", array( "apiKey" => "xxxxxxxxxxx", "channel" => "xxxxxxxxxx" ) );
+$log->push( "warning", "Teste!" );
 
 ?>
 ```

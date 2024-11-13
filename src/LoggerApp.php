@@ -7,23 +7,41 @@ use Monolog\Handler\TelegramBotHandler;
 
 class LoggerApp 
 {
-    static function logger($filename, $channel = "console", $handler = "default") 
-        {
-            $logg = new Logger( $channel );
+    public $logger;
 
-            $resultHandler = match($handler) {
-                "handler-file"          => new StreamHandler( getcwd() . "/logs/$filename.txt", Logger::DEBUG),
-                "handler-telegram"      => new TelegramBotHandler( 
-                    "7672712227:AAGKjr2VE7llysPhU6-vts-6CMULt_B144U",
-                    "@logs_notifications"    
-                , Logger::WARNING),
-                default             => new StreamHandler( getcwd() . "/logs/$filename.txt", Logger::DEBUG)
+    public function __construct(
+        protected $filename = "log",
+        protected $channel  = "console",
+        protected $handler  = "default",
+        $teleParam = null
+    ) 
+    {  
+        
+        $log           = new Logger( $channel );
+        $result  = match($handler) {
+            default             => new StreamHandler( getcwd() . "/logs/$filename.txt", Logger::DEBUG),
+            "handler-file"      => new StreamHandler( getcwd() . "/logs/$filename.txt", Logger::DEBUG),
+            "handler-telegram"  => new TelegramBotHandler( $teleParam["apiKey"], $teleParam["channel"] , Logger::WARNING ),
+        };
+
+        $result  ->setFormatter( new LineFormatter(null, "d/m/Y H:i:s", false, true) );
+        $log     ->pushHandler( $result );
+
+        $this->logger = $log;
+
+    }
+
+
+    public function push($method, $msg) 
+        {
+
+            $result  = match($method) {
+                default   => $this->logger->info($msg),   
+                "info"    => $this->logger->info($msg),
+                "warning" => $this->logger->warning($msg)     
+                
             };
 
-            $resultHandler->setFormatter( new LineFormatter(null, "d/m/Y H:i:s", false, true) );
-            $logg->pushHandler( $resultHandler );
-            
-            return $logg;
         }
 
 }
