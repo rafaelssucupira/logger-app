@@ -24,7 +24,7 @@ class LoggerApp
             "handler-telegram"  => new TelegramBotHandler( $teleParam["apiKey"], $teleParam["channel"] , Logger::WARNING ),
         };
 
-        $result  ->setFormatter( new LineFormatter(null, "d/m/Y H:i:s", false, true) );
+        $result  ->setFormatter( new LineFormatter(null, "d/m/Y H:i:s", true, true) );
         $log     ->pushHandler( $result );
 
         $this->logger = $log;
