@@ -21,7 +21,7 @@ class LoggerApp
         $result  = match($handler) {
             default             => new StreamHandler( getcwd() . "/logs/$filename.txt", Logger::DEBUG),
             "handler-file"      => new StreamHandler( getcwd() . "/logs/$filename.txt", Logger::DEBUG),
-            "handler-telegram"  => new TelegramBotHandler( $teleParam["apiKey"], $teleParam["channel"] , Logger::WARNING ),
+            "handler-telegram"  => new TelegramBotHandler( $teleParam["apiKey"], $teleParam["channel"] , Logger::WARNING, true, "HTML" )
         };
 
         $result  ->setFormatter( new LineFormatter(null, "d/m/Y H:i:s", true, true) );
